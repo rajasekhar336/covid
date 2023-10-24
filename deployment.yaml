@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raja-deployment
+spec:
+  selector:
+    matchLabels:
+      app: raja
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: raja
+    spec:
+      containers:
+      - name: raja
+        image: rajatherise/covid:latest
+        ports:
+        - containerPort: 80
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: raja
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31000
