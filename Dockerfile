@@ -3,7 +3,7 @@ FROM php:7.4-apache
 RUN apt-get update && apt-get install -y \
     libzip-dev 
 
-RUN install-php-extensions gd mysqli
+RUN docker-php-ext-install gd gd mysqli
 
 # Set the working directory in the container
 WORKDIR /var/www/html
