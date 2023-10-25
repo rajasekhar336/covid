@@ -4,10 +4,10 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libzip-dev \
-    libmysqlclient-dev
+    libzip-dev 
 
-RUN docker-php-ext-install gd gd mysqli
+RUN docker-php-ext-install gd 
+RUN docker-php-ext-install pdo_mysql
 
 # Set the working directory in the container
 WORKDIR /var/www/html
