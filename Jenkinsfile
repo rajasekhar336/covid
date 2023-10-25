@@ -13,18 +13,22 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+       stage('Build and SonarQube Analysis') {
             steps {
                 script {
-                    sh """sonar-scanner \\
-                        -Dsonar.projectKey=covid \\
-                        -Dsonar.sources=. \\
-                        -Dsonar.host.url=http://52.66.235.10:9000 \\
-                        -Dsonar.login=sonarqube
-                    """
+                    def scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withEnv(["PATH+SONARQUBE_SCANNER=${scannerHome}/bin"]) {
+                        sh '''
+                            # Install dependencies and build your PHP project
+                            composer install
+                            # Run SonarQube analysis
+                            sonar-scanner
+                        '''
+                    }
                 }
             }
         }
+    }
 
         stage('Login') {
             steps {
