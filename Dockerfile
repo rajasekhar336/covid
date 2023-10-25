@@ -1,6 +1,8 @@
 # Use an official PHP Apache image as the base image
 FROM php:7.4-apache
 
+RUN install-php-extensions gd mysqli
+
 # Set the working directory in the container
 WORKDIR /var/www/html
 
