@@ -16,11 +16,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // Run SonarScanner to analyze your code and send the results to SonarQube
-                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv('sonarqube') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
+                    sh """sonar-scanner \\
+                        -Dsonar.projectKey=covid \\
+                        -Dsonar.sources=. \\
+                        -Dsonar.host.url=http://52.66.235.10:9000 \\
+                        -Dsonar.login=sonarqube
+                    """
                 }
             }
         }
