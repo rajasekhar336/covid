@@ -1,4 +1,3 @@
-
   ?>
 <?php
 $host = '172.31.33.119'; // MySQL host (replace with your actual host)
