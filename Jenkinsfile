@@ -28,6 +28,7 @@ pipeline {
                     sh """
                         export KUBECONFIG=\$KUBECONFIG_FILE
                         kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
                     """
                 }
             }
