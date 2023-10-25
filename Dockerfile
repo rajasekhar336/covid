@@ -1,5 +1,7 @@
 # Use an official PHP Apache image as the base image
 FROM php:7.4-apache
+RUN apt-get update && apt-get install -y \
+    libzip-dev 
 
 RUN install-php-extensions gd mysqli
 
