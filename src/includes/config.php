@@ -1,10 +1,15 @@
-<?php
-//time zone
-date_default_timezone_set('Asia/Kolkata');
-//database connection
-$con=mysqli_connect("172.31.33.119","root","rajasekhar","covidtmsdb");
-if(mysqli_connect_errno()){
-echo "Connection Fail".mysqli_connect_error();
-}
 
   ?>
+<?php
+$host = '172.31.33.119'; // MySQL host (replace with your actual host)
+$username = 'root'; // MySQL username
+$password = 'rajasekhar'; // MySQL password
+$database = 'covidtmsdb'; // MySQL database name
+
+// Create a database connection
+$connection = new mysqli($host, $username, $password, $database);
+
+// Check the connection
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}
