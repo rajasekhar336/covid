@@ -12,16 +12,31 @@ pipeline {
                 sh 'docker build -t rajatherise/covid .'
             }
         }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Run SonarScanner to analyze your code and send the results to SonarQube
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('sonarqube') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+
         stage('Login') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
+
         stage('Push') {
             steps {
                 sh 'docker push rajatherise/covid'
             }
         }
+
         stage('Deploy to Kubernetes') {
             steps {
                 withCredentials([file(credentialsId: 'kubernetes', variable: 'KUBECONFIG_FILE')]) {
@@ -34,10 +49,10 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             sh 'docker logout'
         }
     }
 }
-
