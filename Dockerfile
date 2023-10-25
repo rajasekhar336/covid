@@ -1,7 +1,11 @@
 # Use an official PHP Apache image as the base image
 FROM php:7.4-apache
 RUN apt-get update && apt-get install -y \
-    libzip-dev 
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    libmysqlclient-dev
 
 RUN docker-php-ext-install gd gd mysqli
 
