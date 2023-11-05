@@ -13,22 +13,6 @@ pipeline {
             }
         }
 
-        stage('Build and SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool name: 'sonarqube'
-                    withEnv(["PATH+SONARQUBE_SCANNER=${scannerHome}/bin"]) {
-                        sh '''
-                            # Install dependencies and build your PHP project
-                            composer install
-                            # Run SonarQube analysis
-                            sonar-scanner
-                        '''
-                    }
-                }
-            }
-        }
-
         stage('Login') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
